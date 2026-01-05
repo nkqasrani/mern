@@ -23,6 +23,7 @@ const Tasks = () => {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search, filter]);
 
   const fetchData = async () => {
