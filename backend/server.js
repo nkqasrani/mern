@@ -9,7 +9,10 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: process.env.CLIENT_URL || '*',
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -19,6 +22,14 @@ mongoose.connect(process.env.MONGODB_URI)
 .catch((err) => console.error('❌ MongoDB connection error:', err));
 
 // Routes
+app.get('/', (req, res) => {
+  res.json({ 
+    success: true, 
+    message: 'Task Management API is running',
+    version: '1.0.0'
+  });
+});
+
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/projects', require('./routes/projects'));
 app.use('/api/tasks', require('./routes/tasks'));
